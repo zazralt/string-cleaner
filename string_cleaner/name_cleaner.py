@@ -32,25 +32,25 @@ def detect_naming_convention(text: str) -> str:
         return "lowercase"
     return "unknown"
 
-def capitalize_after_space(text):
+def capitalize_after_space(text: str) -> str:
     return re.sub(r'(?<=\s)([a-z])', lambda m: m.group(1).upper(), text)
 
-def remove_outer_whitespace(text):
+def remove_outer_whitespace(text: str) -> str:
     return text.strip()
 
-def remove_whitespaces(text):
+def remove_whitespaces(text: str) -> str:
     return re.sub(r'\s+', '', text).strip()
 
-def remove_multiple_whitespaces(text):
+def remove_multiple_whitespaces(text: str) -> str:
     return re.sub(r'\s+', ' ', text).strip()
 
-def remove_non_ascii(text):
+def remove_non_ascii(text: str) -> str:
     return ''.join(char for char in text if ord(char) < 128)
 
-def remove_non_alphabetic(text):
+def remove_non_alphabetic((text: str) -> str:
     return re.sub(r"[^A-Za-z\s-]", '', text)
 
-def remove_non_alphanumeric(text):
+def remove_non_alphanumeric(text: str) -> str:
     return re.sub(r"[^A-Za-z0-9\s-]", '', text)
 
 def remove_non_utf8(text: str) -> str:
@@ -68,21 +68,21 @@ def remove_curly_brackets(text: str) -> str:
 def remove_angle_brackets(text: str) -> str:
     return re.sub(r"[\<].*?[\>]", '', text)
     
-def replace_ampersand(text):
+def replace_ampersand(text: str) -> str:
     return text.replace('&', 'and')
 
-def replace_dashes_with_hyphen(text):
+def replace_dashes_with_hyphen(text: str) -> str:
     for dash in ['–', '—', '−']:
         text = text.replace(dash, '-')
     return text
 
-def replace_accents(text):
+def replace_accents(text: str) -> str:
     return ''.join(
         c for c in unicodedata.normalize('NFD', text)
         if unicodedata.category(c) != 'Mn'
     )
 
-def lowercase_minor_words(text):
+def lowercase_minor_words(text: str) -> str:
     minor_words = [
         "A", "And", "As", "At", "But", "By", "Down", "For", "From", "If",
         "In", "Into", "Like", "Near", "Nor", "Of", "Off", "On", "Once",
