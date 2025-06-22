@@ -17,4 +17,4 @@ Homepage = "https://github.com/zazralt/string-cleaner"
 Repository = "https://github.com/zazralt/string-cleaner"
 
 [tool.setuptools]
-py-modules = ["name_cleaner"]
+packages = ["string_cleaner"]
