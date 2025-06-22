@@ -30,7 +30,7 @@ def detect_naming_convention(text: str) -> str:
         return "UPPER_CASE"
     if re.fullmatch(r'[a-z]+', text):
         return "lowercase"
-    return "unknown"
+    return ""
 
 def capitalize_after_space(text: str) -> str:
     """
