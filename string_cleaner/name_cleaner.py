@@ -175,7 +175,42 @@ def remove_angle_brackets(text: str) -> str:
         str: String without angle bracketed content.
     """
     return re.sub(r"[\<].*?[\>]", '', text)
+    
+def remove_windows_special_characters(text: str) -> str:
+    """
+    Removes common Windows special/control characters, such as non-breaking spaces,
+    carriage returns, soft hyphens, and other non-printable or control characters.
 
+    Args:
+        text (str): The input string.
+
+    Returns:
+        str: Cleaned string without Windows-specific control characters.
+    """
+    # Replace specific Windows characters explicitly
+    replacements = {
+        '\u00A0': ' ',  # Non-breaking space
+        '\u200B': '',   # Zero-width space
+        '\u200E': '',   # Left-to-right mark
+        '\u200F': '',   # Right-to-left mark
+        '\u202A': '',   # LRE
+        '\u202B': '',   # RLE
+        '\u202C': '',   # PDF
+        '\u202D': '',   # LRO
+        '\u202E': '',   # RLO
+        '\uFEFF': '',   # BOM
+        '\u00AD': '',   # Soft hyphen
+        '\r': '',       # Carriage return (may be redundant if using `strip()` already)
+    }
+
+    for char, replacement in replacements.items():
+        text = text.replace(char, replacement)
+
+    # Optionally remove all control characters (ASCII 0–31, except \n and \t if needed)
+    text = ''.join(ch for ch in text if ch == '\n' or ch == '\t' or ord(ch) >= 32)
+
+    return text
+    
 def replace_ampersand(text: str) -> str:
     """
     Replaces all ampersands ('&') with the word 'and'.
