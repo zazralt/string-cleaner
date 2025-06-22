@@ -16,19 +16,19 @@ def detect_naming_convention(text: str) -> str:
         - 'lowercase'
         - ''
     """
-    if re.fullmatch(r'[a-z]+(_[a-z]+)+', text):
+    if re.fullmatch(r'[a-z0-9]+(_[a-z0-9]+)+', text):
         return "snake_case"
-    if re.fullmatch(r'[a-z]+([A-Z][a-z0-9]*)+', text):
+    if re.fullmatch(r'[a-z0-9]+([A-Z][a-z0-9]*)+', text):
         return "camelCase"
     if re.fullmatch(r'([A-Z][a-z0-9]+)+', text):
         return "PascalCase"
     if re.fullmatch(r'[a-z0-9]+(-[a-z0-9]+)+', text):
         return "kebab-case"
-    if re.fullmatch(r'([A-Z0-9][a-z0-9]*)(\s[A-Z0-9][a-zA-Z0-9]*)*', text):
+    if text.title() == text:
         return "Title Case"
-    if re.fullmatch(r'[A-Z]+(_[A-Z]+)+', text) or re.fullmatch(r'[A-Z]+', text):
+    if re.fullmatch(r'[A-Z0-9]+(_[A-Z0-9]+)+', text) or re.fullmatch(r'[A-Z0-9]+', text):
         return "UPPER_CASE"
-    if re.fullmatch(r'[a-z]+', text):
+    if re.fullmatch(r'[a-z0-9]+', text):
         return "lowercase"
     return ""
     
