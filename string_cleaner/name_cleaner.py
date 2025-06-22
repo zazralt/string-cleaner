@@ -47,7 +47,7 @@ def remove_multiple_whitespaces(text: str) -> str:
 def remove_non_ascii(text: str) -> str:
     return ''.join(char for char in text if ord(char) < 128)
     
-def remove_non_alphabetic((text: str) -> str:
+def remove_non_alphabetic(text: str) -> str:
     return re.sub(r"[^A-Za-z\s-]", '', text)
     
 def remove_non_alphanumeric(text: str) -> str:
