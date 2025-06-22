@@ -24,7 +24,7 @@ def detect_naming_convention(text: str) -> str:
         return "PascalCase"
     if re.fullmatch(r'[a-z0-9]+(-[a-z0-9]+)+', text):
         return "kebab-case"
-    if re.fullmatch(r'([A-Z0-9][a-zA-Z0-9]*)(\s[A-Z0-9][a-zA-Z0-9]*)*', text):
+    if re.fullmatch(r'([A-Z0-9][a-z0-9]*)(\s[A-Z0-9][a-zA-Z0-9]*)*', text):
         return "Title Case"
     if re.fullmatch(r'[A-Z]+(_[A-Z]+)+', text) or re.fullmatch(r'[A-Z]+', text):
         return "UPPER_CASE"
