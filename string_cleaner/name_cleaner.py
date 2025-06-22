@@ -52,10 +52,10 @@ def remove_non_alphabetic((text: str) -> str:
 
 def remove_non_alphanumeric(text: str) -> str:
     return re.sub(r"[^A-Za-z0-9\s-]", '', text)
-
+    
 def remove_non_utf8(text: str) -> str:
     return text.encode('utf-8', errors='ignore').decode('utf-8', errors='ignore')
-
+    
 def remove_round_brackets(text: str) -> str:
     return re.sub(r"[\(].*?[\)]", '', text)
     
