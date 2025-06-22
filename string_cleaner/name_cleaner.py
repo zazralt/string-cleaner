@@ -56,6 +56,18 @@ def remove_non_alphanumeric(text):
 def remove_non_utf8(text: str) -> str:
     return text.encode('utf-8', errors='ignore').decode('utf-8', errors='ignore')
 
+def remove_round_brackets(text: str) -> str:
+    return re.sub(r"[\(].*?[\)]", '', text)
+    
+def remove_square_brackets(text: str) -> str:
+    return re.sub(r"[\[].*?[\]]", '', text)
+    
+def remove_curly_brackets(text: str) -> str:
+    return re.sub(r"[\{].*?[\}]", '', text)
+    
+def remove_angle_brackets(text: str) -> str:
+    return re.sub(r"[\<].*?[\>]", '', text)
+    
 def replace_ampersand(text):
     return text.replace('&', 'and')
 
