@@ -58,10 +58,10 @@ def remove_non_ascii(text):
     return ''.join(char for char in text if ord(char) < 128)
 
 def remove_non_alphabetic(text):
-    return re.sub(r"[^A-Za-z\s'-]", '', text)
+    return re.sub(r"[^A-Za-z\s-]", '', text)
 
 def remove_non_alphanumeric(text):
-    return re.sub(r"[^A-Za-z0-9\s'-]", '', text)
+    return re.sub(r"[^A-Za-z0-9\s-]", '', text)
 
 def replace_ampersand(text):
     return text.replace('&', 'and')
