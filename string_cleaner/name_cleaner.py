@@ -44,7 +44,6 @@ def detect_naming_convention(text: str) -> str:
         return "lowercase"
     return "unknown"
 
-
 def capitalize_after_space(text):
     return re.sub(r'(?<=\s)([a-z])', lambda m: m.group(1).upper(), text)
 
@@ -60,10 +59,21 @@ def remove_multiple_whitespaces(text):
 def remove_non_ascii(text):
     return ''.join(char for char in text if ord(char) < 128)
 
+def remove_non_alpha(text):
+    return re.sub(r"[^a-zA-Z\s'-]", '', text)
+
 def replace_dashes_with_hyphen(text):
     for dash in ['–', '—', '−']:
         text = text.replace(dash, '-')
     return text
+
+import unicodedata
+
+def replace_accents(text):
+    return ''.join(
+        c for c in unicodedata.normalize('NFD', text)
+        if unicodedata.category(c) != 'Mn'
+    )
 
 def lowercase_minor_words(text):
     minor_words = [
@@ -79,7 +89,6 @@ def lowercase_minor_words(text):
         text = re.sub(pattern, word.lower(), text)
 
     return text
-
 
 def normalize_notation(name: str, notation: str = 'default', case: str = 'default', delimiter: str = ' ', preserve_case: bool = False) -> str:
     """
