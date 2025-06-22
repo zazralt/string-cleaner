@@ -49,7 +49,7 @@ def remove_non_ascii(text: str) -> str:
     
 def remove_non_alphabetic((text: str) -> str:
     return re.sub(r"[^A-Za-z\s-]", '', text)
-
+    
 def remove_non_alphanumeric(text: str) -> str:
     return re.sub(r"[^A-Za-z0-9\s-]", '', text)
     
