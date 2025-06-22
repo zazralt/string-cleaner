@@ -33,56 +33,200 @@ def detect_naming_convention(text: str) -> str:
     return "unknown"
 
 def capitalize_after_space(text: str) -> str:
+    """
+    Capitalizes the first lowercase letter that follows any whitespace character.
+
+    Args:
+        text (str): The input string.
+
+    Returns:
+        str: String with letters capitalized after whitespace.
+    """
     return re.sub(r'(?<=\s)([a-z])', lambda m: m.group(1).upper(), text)
 
 def remove_outer_whitespace(text: str) -> str:
+    """
+    Removes leading and trailing whitespace from the input string.
+
+    Args:
+        text (str): The input string.
+
+    Returns:
+        str: Trimmed string with no leading or trailing whitespace.
+    """
     return text.strip()
 
 def remove_whitespaces(text: str) -> str:
+    """
+    Removes all whitespace characters from the string.
+
+    Args:
+        text (str): The input string.
+
+    Returns:
+        str: String with all whitespace removed.
+    """
     return re.sub(r'\s+', '', text).strip()
 
 def remove_multiple_whitespaces(text: str) -> str:
+    """
+    Replaces multiple consecutive whitespace characters with a single space.
+
+    Args:
+        text (str): The input string.
+
+    Returns:
+        str: Cleaned string with normalized spacing.
+    """
     return re.sub(r'\s+', ' ', text).strip()
 
 def remove_non_ascii(text: str) -> str:
+    """
+    Removes all non-ASCII characters from the input string.
+
+    Args:
+        text (str): The input string.
+
+    Returns:
+        str: ASCII-only string.
+    """
     return ''.join(char for char in text if ord(char) < 128)
-    
+
 def remove_non_alphabetic(text: str) -> str:
+    """
+    Removes all characters except alphabetic letters, spaces, and hyphens.
+
+    Args:
+        text (str): The input string.
+
+    Returns:
+        str: String with only letters, spaces, and hyphens.
+    """
     return re.sub(r"[^A-Za-z\s-]", '', text)
-    
+
 def remove_non_alphanumeric(text: str) -> str:
+    """
+    Removes all characters except letters, digits, spaces, and hyphens.
+
+    Args:
+        text (str): The input string.
+
+    Returns:
+        str: Cleaned alphanumeric string.
+    """
     return re.sub(r"[^A-Za-z0-9\s-]", '', text)
-    
+
 def remove_non_utf8(text: str) -> str:
+    """
+    Removes invalid UTF-8 characters by encoding and decoding the string.
+
+    Args:
+        text (str): The input string.
+
+    Returns:
+        str: UTF-8 compliant string.
+    """
     return text.encode('utf-8', errors='ignore').decode('utf-8', errors='ignore')
-    
+
 def remove_round_brackets(text: str) -> str:
+    """
+    Removes content enclosed in round brackets including the brackets.
+
+    Args:
+        text (str): The input string.
+
+    Returns:
+        str: String without round bracketed content.
+    """
     return re.sub(r"[\(].*?[\)]", '', text)
-    
+
 def remove_square_brackets(text: str) -> str:
+    """
+    Removes content enclosed in square brackets including the brackets.
+
+    Args:
+        text (str): The input string.
+
+    Returns:
+        str: String without square bracketed content.
+    """
     return re.sub(r"[\[].*?[\]]", '', text)
-    
+
 def remove_curly_brackets(text: str) -> str:
+    """
+    Removes content enclosed in curly brackets including the brackets.
+
+    Args:
+        text (str): The input string.
+
+    Returns:
+        str: String without curly bracketed content.
+    """
     return re.sub(r"[\{].*?[\}]", '', text)
-    
+
 def remove_angle_brackets(text: str) -> str:
+    """
+    Removes content enclosed in angle brackets including the brackets.
+
+    Args:
+        text (str): The input string.
+
+    Returns:
+        str: String without angle bracketed content.
+    """
     return re.sub(r"[\<].*?[\>]", '', text)
-    
+
 def replace_ampersand(text: str) -> str:
+    """
+    Replaces all ampersands ('&') with the word 'and'.
+
+    Args:
+        text (str): The input string.
+
+    Returns:
+        str: String with '&' replaced by 'and'.
+    """
     return text.replace('&', 'and')
 
 def replace_dashes_with_hyphen(text: str) -> str:
+    """
+    Replaces en dash (–), em dash (—), and minus sign (−) with a standard hyphen (-).
+
+    Args:
+        text (str): The input string.
+
+    Returns:
+        str: String with all types of dashes replaced by hyphens.
+    """
     for dash in ['–', '—', '−']:
         text = text.replace(dash, '-')
     return text
 
 def replace_accents(text: str) -> str:
+    """
+    Removes accents from characters by decomposing Unicode characters.
+
+    Args:
+        text (str): The input string.
+
+    Returns:
+        str: ASCII-equivalent string without accents.
+    """
     return ''.join(
         c for c in unicodedata.normalize('NFD', text)
         if unicodedata.category(c) != 'Mn'
     )
 
 def lowercase_minor_words(text: str) -> str:
+    """
+    Converts minor English words (e.g., 'and', 'in', 'with') to lowercase if surrounded by whitespace.
+
+    Args:
+        text (str): The input string.
+
+    Returns:
+        str: String with minor words lowercased (not affecting start/end or punctuation-adjacent).
+    """
     minor_words = [
         "A", "And", "As", "At", "But", "By", "Down", "For", "From", "If",
         "In", "Into", "Like", "Near", "Nor", "Of", "Off", "On", "Once",
@@ -90,7 +234,6 @@ def lowercase_minor_words(text: str) -> str:
         "When", "With", "Yet"
     ]
 
-    # Replace each word with its lowercase equivalent when surrounded by whitespace
     for word in minor_words:
         pattern = r'(?<=\s){}(?=\s)'.format(re.escape(word))
         text = re.sub(pattern, word.lower(), text)
