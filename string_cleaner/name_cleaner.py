@@ -51,6 +51,9 @@ def capitalize_after_space(text):
 def remove_outer_whitespace(text):
     return text.strip()
 
+def remove_whitespaces(text):
+    return re.sub(r'\s+', '', text).strip()
+
 def remove_multiple_whitespaces(text):
     return re.sub(r'\s+', ' ', text).strip()
 
@@ -62,6 +65,9 @@ def remove_non_alphabetic(text):
 
 def remove_non_alphanumeric(text):
     return re.sub(r"[^A-Za-z0-9\s-]", '', text)
+
+def remove_non_utf8(text: str) -> str:
+    return text.encode('utf-8', errors='ignore').decode('utf-8', errors='ignore')
 
 def replace_ampersand(text):
     return text.replace('&', 'and')
