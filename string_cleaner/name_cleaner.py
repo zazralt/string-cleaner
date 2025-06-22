@@ -1,4 +1,5 @@
 import re
+import unicodedata
 
 def camel_to_snake(name: str) -> str:
     """
@@ -47,9 +48,6 @@ def detect_naming_convention(text: str) -> str:
 def capitalize_after_space(text):
     return re.sub(r'(?<=\s)([a-z])', lambda m: m.group(1).upper(), text)
 
-def replace_ampersand(text):
-    return text.replace('&', 'and')
-
 def remove_outer_whitespace(text):
     return text.strip()
 
@@ -59,15 +57,19 @@ def remove_multiple_whitespaces(text):
 def remove_non_ascii(text):
     return ''.join(char for char in text if ord(char) < 128)
 
-def remove_non_alpha(text):
-    return re.sub(r"[^a-zA-Z\s'-]", '', text)
+def remove_non_alphabetic(text):
+    return re.sub(r"[^A-Za-z\s'-]", '', text)
+
+def remove_non_alphanumeric(text):
+    return re.sub(r"[^A-Za-z0-9\s'-]", '', text)
+
+def replace_ampersand(text):
+    return text.replace('&', 'and')
 
 def replace_dashes_with_hyphen(text):
     for dash in ['–', '—', '−']:
         text = text.replace(dash, '-')
     return text
-
-import unicodedata
 
 def replace_accents(text):
     return ''.join(
