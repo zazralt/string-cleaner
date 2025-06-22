@@ -44,6 +44,31 @@ def detect_naming_convention(text: str) -> str:
         return "lowercase"
     return "unknown"
 
+
+def capitalize_after_space(text):
+    return re.sub(r'(?<=\s)([a-z])', lambda m: m.group(1).upper(), text)
+
+
+def replace_ampersand(text):
+    return text.replace('&', 'and')
+
+
+def lowercase_minor_words(text):
+    minor_words = [
+        "A", "And", "As", "At", "But", "By", "Down", "For", "From", "If",
+        "In", "Into", "Like", "Near", "Nor", "Of", "Off", "On", "Once",
+        "Onto", "Or", "Over", "Past", "So", "Than", "That", "To", "Upon",
+        "When", "With", "Yet"
+    ]
+
+    # Replace each word with its lowercase equivalent when surrounded by whitespace
+    for word in minor_words:
+        pattern = r'(?<=\s){}(?=\s)'.format(re.escape(word))
+        text = re.sub(pattern, word.lower(), text)
+
+    return text
+
+
 def normalize_notation(name: str, notation: str = 'default', case: str = 'default', delimiter: str = ' ', preserve_case: bool = False) -> str:
     """
     Convert a string into a specified notation format.
