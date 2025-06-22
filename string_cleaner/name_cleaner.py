@@ -61,9 +61,7 @@ def remove_non_ascii(text):
     return ''.join(char for char in text if ord(char) < 128)
 
 def replace_dashes_with_hyphen(text):
-    # Common dash variants
-    dash_variants = ['–', '—', '−']
-    for dash in dash_variants:
+    for dash in ['–', '—', '−']:
         text = text.replace(dash, '-')
     return text
 
