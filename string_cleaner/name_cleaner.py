@@ -1,19 +1,6 @@
 import re
 import unicodedata
 
-def camel_to_snake(name: str) -> str:
-    """
-    Convert CamelCase or camelCase to snake_case.
-
-    Args:
-        name (str): The input string in CamelCase or camelCase.
-
-    Returns:
-        str: The converted string in snake_case.
-    """
-    return re.sub(r'(?<!^)(?=[A-Z])', '_', name).lower()
-
-
 def detect_naming_convention(text: str) -> str:
     """
     Detect the naming convention of a given string.
