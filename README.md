@@ -11,4 +11,7 @@ pip install --force-reinstall git+https://github.com/zazralt/string-cleaner.git
 from string_cleaner import *
 
 detect_naming_convention("foo_bar")
+
+df['name'] = df['name'].apply(lambda name: remove_multiple_whitespaces(name))
+
 ```
