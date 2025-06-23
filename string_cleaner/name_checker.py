@@ -41,7 +41,7 @@ def check_name(name: str, separators: str = " ") -> str:
         separators (str): Characters to ignore in alphabetic and alphanumeric checks.
 
     Returns:
-        str: A formatted string beginning with 'contains: ...' listing issues,
+        str: A formatted string beginning with 'contains ...' listing issues,
              or an empty string if no issues are detected.
     """
     result = []
