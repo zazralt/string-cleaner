@@ -46,6 +46,8 @@ def check_name(name: str, separator: str = " ", ignore: str = "") -> str:
     """
     result = []
 
+    if ignore != '':
+        name = re.sub("["+ignore+"]", '', name)
     if contains_number(name):
         result.append("number")
     if contains_acronym(name):
@@ -64,8 +66,6 @@ def check_name(name: str, separator: str = " ", ignore: str = "") -> str:
         result.append("punctuation")
 
     cleaned_name = re.sub(separator, '', name)
-    if ignore != '':
-        cleaned_name = re.sub("["+ignore+"]", '', cleaned_name)
     cleaned_name = re.sub(r'[\d!"#$%&\'()*+,\-./:;<=>?@\[\]^_`{|}~]', '', cleaned_name)
     if any(not c.isalpha() for c in cleaned_name):
         result.append("non-alphabetic")
