@@ -46,16 +46,16 @@ def check_name(name: str, separator: str = " ", ignore: str = "") -> str:
     """
     result = []
 
+    if contains_outer_whitespace(name):
+        result.append("outer whitespace")
+    if contains_multiple_whitespaces(name):
+        result.append("multiple whitespaces")
     if ignore != '':
         name = re.sub("["+ignore+"]", '', name)
     if contains_number(name):
         result.append("number")
     if contains_acronym(name):
         result.append("acronym")
-    if contains_outer_whitespace(name):
-        result.append("outer whitespace")
-    if contains_multiple_whitespaces(name):
-        result.append("multiple whitespaces")
     if contains_non_ascii(name):
         result.append("non-ASCII")
     if contains_unicode_dashes(name):
