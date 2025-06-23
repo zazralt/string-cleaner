@@ -72,7 +72,7 @@ def check_name(name: str, separator: str = " ", ignore: str = "") -> str:
     if any(not c.isalnum() for c in cleaned_name):
         result.append("non-alphanumeric")
 
-    return f"contains {', '.join(result)}" if result else ""
+    return ', '.join(result) if result else ""
 
 
 def contains_acronym(name: str) -> bool:
