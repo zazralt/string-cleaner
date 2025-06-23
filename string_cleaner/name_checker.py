@@ -56,7 +56,7 @@ def check_name(name: str, separators: str = " ") -> str:
         result.append("non-ASCII characters")
     if contains_unicode_dashes(name):
         result.append("unicode dashes")
-    if contains_ampersand(ampersand):
+    if contains_ampersand(name):
         result.append("ampersand")
     
     cleaned_name = ''.join(c for c in name if c not in separators)
