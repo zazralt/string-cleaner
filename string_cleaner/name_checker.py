@@ -64,7 +64,8 @@ def check_name(name: str, separator: str = " ", ignore: str = "") -> str:
         result.append("punctuation")
 
     cleaned_name = re.sub(separator, '', name)
-    cleaned_name = re.sub("["+ignore+"]", '', cleaned_name)
+    if ignore != '':
+        cleaned_name = re.sub("["+ignore+"]", '', cleaned_name)
     cleaned_name = re.sub(r'[\d!"#$%&\'()*+,\-./:;<=>?@\[\]^_`{|}~]', '', cleaned_name)
     if any(not c.isalpha() for c in cleaned_name):
         result.append("non-alphabetic")
