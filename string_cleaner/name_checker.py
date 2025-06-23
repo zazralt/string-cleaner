@@ -34,6 +34,7 @@ def detect_naming_convention(text: str) -> str:
 def check_name(name: str) -> str:
     """
     Evaluates a name string against multiple formatting and character rules.
+    Skips certain checks if whitespace is present.
 
     Args:
         name (str): The input name.
@@ -52,10 +53,13 @@ def check_name(name: str) -> str:
         result.append("contains outer whitespace")
     if contains_non_ascii(name):
         result.append("contains non-ASCII characters")
-    if contains_non_alphabetic(name):
-        result.append("contains non-alphabetic characters")
-    if contains_non_alphanumeric(name):
-        result.append("contains non-alphanumeric characters")
+
+    if not any(char.isspace() for char in name):
+        if contains_non_alphabetic(name):
+            result.append("contains non-alphabetic characters")
+        if contains_non_alphanumeric(name):
+            result.append("contains non-alphanumeric characters")
+
     if contains_brackets(name):
         result.append("contains brackets")
 
@@ -153,6 +157,18 @@ def contains_non_utf8(b: bytes) -> bool:
     except UnicodeDecodeError:
         return True
 
+def contains_punctuation(s: str) -> bool:
+    """
+    Checks if the input string contains any ASCII punctuation characters using regex.
+    
+    Parameters:
+        s (str): The input string to check.
+    
+    Returns:
+        bool: True if any ASCII punctuation character is found, False otherwise.
+    """
+    return bool(re.search(r'[!"#$%&\'()*+,\-./:;<=>?@\[\]^_`{|}~]', s))
+    
 def contains_brackets(s: str) -> bool:
     """
     Checks if the input string contains any brackets: (), [], {}, <>.
