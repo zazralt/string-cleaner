@@ -33,16 +33,30 @@ def detect_naming_convention(text: str) -> str:
 
 def check_name(name: str, separator: str = " ", ignore: str = "") -> str:
     """
-    Evaluates a name string against multiple formatting and character rules.
-    Skips non-alphabetic and non-alphanumeric checks for specified separator character.
+    Analyzes a given string to identify potential formatting or character issues
+    in accordance with naming conventions.
 
-    Args:
-        name (str): The input name.
-        separators (str): Characters to ignore in alphabetic and alphanumeric checks.
+    This function checks for the following:
+      - Leading or trailing whitespace
+      - Multiple consecutive whitespace characters
+      - Presence of numeric digits
+      - Presence of acronyms (e.g., BMW, NASA)
+      - Non-ASCII characters
+      - Unicode dash characters (–, —, −)
+      - Ampersand ('&') characters
+      - ASCII punctuation
+      - Non-alphabetic characters (after separator and punctuation removal)
+      - Non-alphanumeric characters (after separator and punctuation removal)
+
+    Parameters:
+        name (str): The name string to validate.
+        separator (str): Characters to treat as neutral when checking for alphabetic
+                         or alphanumeric compliance. Default is a space.
+        ignore (str): Characters to remove from the name prior to validation.
 
     Returns:
-        str: A formatted string beginning with 'contains ...' listing issues,
-             or an empty string if no issues are detected.
+        str: A comma-separated list of detected issues prefixed with 'contains',
+             or an empty string if the name passes all checks.
     """
     result = []
 
