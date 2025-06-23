@@ -46,24 +46,22 @@ def check_name(name: str, separators: str = " ") -> str:
     """
     result = []
 
-    if contains_acronym(name):
-        result.append("acronym")
-    if contains_multiple_whitespaces(name):
-        result.append("multiple whitespaces")
-    if contains_outer_whitespace(name):
-        result.append("outer whitespace")
     if contains_number(name):
         result.append("number")
+    if contains_acronym(name):
+        result.append("acronym")
+    if contains_outer_whitespace(name):
+        result.append("outer whitespace")
+    if contains_multiple_whitespaces(name):
+        result.append("multiple whitespaces")
     if contains_non_ascii(name):
         result.append("non-ASCII")
     if contains_unicode_dashes(name):
         result.append("unicode dashes")
     if contains_ampersand(name):
         result.append("ampersand")
-    if contains_punctuation(cleaned_name):
+    if contains_punctuation(name):
         result.append("punctuation")
-    if contains_brackets(name):
-        result.append("brackets")
 
     cleaned_name = re.sub(separators, '', name)
     cleaned_name = re.sub(r'[!"#$%&\'()*+,\-./:;<=>?@\[\]^_`{|}~]', '', cleaned_name)
@@ -72,6 +70,7 @@ def check_name(name: str, separators: str = " ") -> str:
         result.append("non-alphabetic")
     if any(not c.isalnum() for c in cleaned_name):
         result.append("non-alphanumeric")
+
     return f"contains {', '.join(result)}" if result else ""
 
 
