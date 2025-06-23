@@ -67,7 +67,7 @@ def check_name(name: str, separators: str = " ") -> str:
         result.append("non-alphanumeric characters")
 
     if contains_punctuation(cleaned_name):
-        result.append("punctuation(")
+        result.append("punctuation")
     
     if contains_brackets(name):
         result.append("brackets")
