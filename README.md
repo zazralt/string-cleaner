@@ -3,7 +3,7 @@ String Cleaner is a Python library for cleaning and normalizing text.
 
 ## Installation
 ```bash
-pip install --force-reinstall git+https://github.com/zazralt/string-cleaner.git
+pip install git+https://github.com/zazralt/string-cleaner.git
 ```
 
 ## Usage
