@@ -54,7 +54,11 @@ def check_name(name: str, separators: str = " ") -> str:
         result.append("outer whitespace")
     if contains_non_ascii(name):
         result.append("non-ASCII characters")
-
+    if contains_unicode_dashes(name):
+        result.append("unicode dashes")
+    if contains_ampersand(ampersand):
+        result.append("ampersand")
+    
     cleaned_name = ''.join(c for c in name if c not in separators)
 
     if any(not c.isalpha() for c in cleaned_name):
@@ -171,7 +175,30 @@ def contains_brackets(s: str) -> bool:
     """
     return bool(re.search(r'[\[\]\(\)\{\}\<\>]', s))
 
+def contains_unicode_dashes(s: str) -> bool:
+    """
+    Checks if the input string contains any Unicode dash characters,
+    including en dash, em dash, and minus sign.
+
+    Args:
+        s (str): The input string.
+
+    Returns:
+        bool: True if any Unicode dash character is found, False otherwise.
+    """
+    return any(c in s for c in ['–', '—', '−'])
+
+def contains_ampersand(s: str) -> bool:
+    """
+    Checks if the input string contains an ampersand character '&'.
+
+    Args:
+        s (str): The input string.
+
+    Returns:
+        bool: True if '&' is present, False otherwise.
+    """
+    return '&' in s
+
 # contains_non_utf8
-# conatains_dashs
 # contains_accents
-# contains_ampersand
