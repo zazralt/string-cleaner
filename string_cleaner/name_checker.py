@@ -52,26 +52,26 @@ def check_name(name: str, separators: str = " ") -> str:
         result.append("multiple whitespaces")
     if contains_outer_whitespace(name):
         result.append("outer whitespace")
+    if contains_number(name):
+        result.append("number")
     if contains_non_ascii(name):
-        result.append("non-ASCII characters")
+        result.append("non-ASCII")
     if contains_unicode_dashes(name):
         result.append("unicode dashes")
     if contains_ampersand(name):
         result.append("ampersand")
-    
-    cleaned_name = ''.join(c for c in name if c not in separators)
-
-    if any(not c.isalpha() for c in cleaned_name):
-        result.append("non-alphabetic characters")
-    if any(not c.isalnum() for c in cleaned_name):
-        result.append("non-alphanumeric characters")
-
     if contains_punctuation(cleaned_name):
         result.append("punctuation")
-    
     if contains_brackets(name):
         result.append("brackets")
 
+    cleaned_name = re.sub(separators, '', name)
+    cleaned_name = re.sub(r'[!"#$%&\'()*+,\-./:;<=>?@\[\]^_`{|}~]', '', cleaned_name)
+    cleaned_name = re.sub(r'\d', '', cleaned_name)
+    if any(not c.isalpha() for c in cleaned_name):
+        result.append("non-alphabetic")
+    if any(not c.isalnum() for c in cleaned_name):
+        result.append("non-alphanumeric")
     return f"contains {', '.join(result)}" if result else ""
 
 
@@ -200,5 +200,17 @@ def contains_ampersand(s: str) -> bool:
     """
     return '&' in s
 
+def contains_number(s: str) -> bool:
+    """
+    Checks if the input string contains any numeric digits (0–9).
+
+    Args:
+        s (str): The input string.
+
+    Returns:
+        bool: True if at least one digit is found, False otherwise.
+    """
+    return any(char.isdigit() for char in s)
+    
 # contains_non_utf8
 # contains_accents
