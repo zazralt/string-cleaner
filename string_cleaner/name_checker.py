@@ -31,39 +31,45 @@ def detect_naming_convention(text: str) -> str:
         return "lowercase"
     return ""
 
-def check_name(name: str) -> str:
+def check_name(name: str, separators: str = " ") -> str:
     """
     Evaluates a name string against multiple formatting and character rules.
-    Skips certain checks if whitespace is present.
+    Skips non-alphabetic and non-alphanumeric checks for specified separator characters.
 
     Args:
         name (str): The input name.
+        separators (str): Characters to ignore in alphabetic and alphanumeric checks.
 
     Returns:
-        str: A semicolon-separated string describing the issues found.
-             Returns an empty string if no issues are detected.
+        str: A formatted string beginning with 'contains: ...' listing issues,
+             or an empty string if no issues are detected.
     """
     result = []
 
     if contains_acronym(name):
-        result.append("contains acronym")
+        result.append("acronym")
     if contains_multiple_whitespaces(name):
-        result.append("contains multiple whitespaces")
+        result.append("multiple whitespaces")
     if contains_outer_whitespace(name):
-        result.append("contains outer whitespace")
+        result.append("outer whitespace")
     if contains_non_ascii(name):
-        result.append("contains non-ASCII characters")
+        result.append("non-ASCII characters")
 
-    if not any(char.isspace() for char in name):
-        if contains_non_alphabetic(name):
-            result.append("contains non-alphabetic characters")
-        if contains_non_alphanumeric(name):
-            result.append("contains non-alphanumeric characters")
+    cleaned_name = ''.join(c for c in name if c not in separators)
 
+    if any(not c.isalpha() for c in cleaned_name):
+        result.append("non-alphabetic characters")
+    if any(not c.isalnum() for c in cleaned_name):
+        result.append("non-alphanumeric characters")
+
+    if contains_punctuation(cleaned_name):
+        result.append("punctuation(")
+    
     if contains_brackets(name):
-        result.append("contains brackets")
+        result.append("brackets")
 
-    return "; ".join(result)
+    return f"contains {', '.join(result)}" if result else ""
+
 
 def contains_acronym(name: str) -> bool:
     """
@@ -141,22 +147,6 @@ def contains_non_alphanumeric(s: str) -> bool:
     """
     return any(not char.isalnum() for char in s)
 
-def contains_non_utf8(b: bytes) -> bool:
-    """
-    Checks if the byte sequence is not valid UTF-8.
-
-    Args:
-        b (bytes): Input byte string.
-
-    Returns:
-        bool: True if the byte sequence is not valid UTF-8, False otherwise.
-    """
-    try:
-        b.decode('utf-8')
-        return False
-    except UnicodeDecodeError:
-        return True
-
 def contains_punctuation(s: str) -> bool:
     """
     Checks if the input string contains any ASCII punctuation characters using regex.
@@ -180,3 +170,8 @@ def contains_brackets(s: str) -> bool:
         bool: True if any bracket is found, False otherwise.
     """
     return bool(re.search(r'[\[\]\(\)\{\}\<\>]', s))
+
+# contains_non_utf8
+# conatains_dashs
+# contains_accents
+# contains_ampersand
