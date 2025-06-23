@@ -1,37 +1,6 @@
 import re
 import unicodedata
 
-def detect_naming_convention(text: str) -> str:
-    """
-    Detect the naming convention of a given string.
-
-    Returns:
-        One of:
-        - 'snake_case'
-        - 'camelCase'
-        - 'PascalCase'
-        - 'kebab-case'
-        - 'Title Case'
-        - 'UPPER_CASE'
-        - 'lowercase'
-        - ''
-    """
-    if re.fullmatch(r'[a-z0-9]+(_[a-z0-9]+)+', text):
-        return "snake_case"
-    if re.fullmatch(r'[a-z0-9]+([A-Z][a-z0-9]*)+', text):
-        return "camelCase"
-    if re.fullmatch(r'([A-Z][a-z0-9]+)+', text):
-        return "PascalCase"
-    if re.fullmatch(r'[a-z0-9]+(-[a-z0-9]+)+', text):
-        return "kebab-case"
-    if text.title() == text:
-        return "Title Case"
-    if re.fullmatch(r'[A-Z0-9]+(_[A-Z0-9]+)+', text) or re.fullmatch(r'[A-Z0-9]+', text):
-        return "UPPER_CASE"
-    if re.fullmatch(r'[a-z0-9]+', text):
-        return "lowercase"
-    return ""
-    
 def capitalize_after_space(text: str) -> str:
     """
     Capitalizes the first lowercase letter that follows any whitespace character.
