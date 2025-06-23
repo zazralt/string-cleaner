@@ -31,10 +31,10 @@ def detect_naming_convention(text: str) -> str:
         return "lowercase"
     return ""
 
-def check_name(name: str, separators: str = " ") -> str:
+def check_name(name: str, separator: str = " ", ignore: str = "") -> str:
     """
     Evaluates a name string against multiple formatting and character rules.
-    Skips non-alphabetic and non-alphanumeric checks for specified separator characters.
+    Skips non-alphabetic and non-alphanumeric checks for specified separator character.
 
     Args:
         name (str): The input name.
@@ -64,8 +64,8 @@ def check_name(name: str, separators: str = " ") -> str:
         result.append("punctuation")
 
     cleaned_name = re.sub(separators, '', name)
-    cleaned_name = re.sub(r'[!"#$%&\'()*+,\-./:;<=>?@\[\]^_`{|}~]', '', cleaned_name)
-    cleaned_name = re.sub(r'\d', '', cleaned_name)
+    cleaned_name = re.sub(f"[{ignore}]", '', cleaned_name)
+    cleaned_name = re.sub(r'[\d!"#$%&\'()*+,\-./:;<=>?@\[\]^_`{|}~]', '', cleaned_name)
     if any(not c.isalpha() for c in cleaned_name):
         result.append("non-alphabetic")
     if any(not c.isalnum() for c in cleaned_name):
